@@ -38,9 +38,10 @@ if (compressedCode == "") {
     code = `
         function setup(){
             lineTo(0,0,-500);
-            lineTo(0,0, 10);
-            lineTo(-5,0, 40);
-            lineTo(-5,0, 500);  
+            for(let i = 0; i < 10; i++){
+                lineTo(0,0, 30+i*60);
+                lineTo(-5,0,60+i*60);
+            }
         }
     `;
 } else {
