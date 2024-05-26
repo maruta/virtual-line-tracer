@@ -1,0 +1,40 @@
+{
+  "name": "virtual-line-tracer",
+  "version": "1.0.0",
+  "description": "A virtual line tracer application using Babylon.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "rollup -c"
+  },
+  "keywords": [],
+  "author": "Ichiro Maruta",
+  "license": "MIT",
+  "dependencies": {
+    "@babylonjs/core": "^7.8.0",
+    "@babylonjs/gui": "^7.8.0",
+    "@babylonjs/inspector": "^7.8.0",
+    "@babylonjs/loaders": "^7.8.0",
+    "@babylonjs/materials": "^7.8.0",
+    "ammojs-typed": "^1.0.6",
+    "express": "^4.19.2",
+    "lzutf8": "^0.6.3",
+    "qrcode": "^1.5.3",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.24.6",
+    "@babel/core": "^7.24.6",
+    "@babel/preset-env": "^7.24.6",
+    "@codemirror/lang-javascript": "^6.2.2",
+    "@codemirror/state": "^6.4.1",
+    "@codemirror/view": "^6.26.3",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.18.0",
+    "rollup-plugin-polyfill-node": "^0.13.0",
+    "webpack-cli": "^5.1.4"
+  }
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Line Tracer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js" integrity="sha384-YNHdsYkH6gMx9y3mRkmcJ2mFUjTd0qNQQvY9VYZgQd7DcN7env35GzlmFaZ23JGp" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"></script>            
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="display-6 text-center mt-4 mb-4" id="title">Virtual Line Tracer</h1>
+        <form id="form" class="mb-3">
+            <div class="row mb-3">
+                <label for="nickname" class="col-sm-3 col-form-label text-sm-end">Nickname</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="nickname" id="nickname" size="5" value="名無し">    
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="val-v" class="col-sm-3 col-form-label text-sm-end">Speed $v\,[\mathrm{km/h}]$</label>
+                <div class="col-sm-9">
+                <input type="number" step="any" class="form-control" name="val-v" id="val-v" size="5" value="30">
+                </div>
+            </div>
+            <div class="row mb-3 mt-4">
+                <div class="col-sm-3 text-sm-end">
+                    <h2 class="h5">Controller</h2>
+                </div>
+                <div class="col-sm-9">
+                    $ U(s) = K\cdot Y(s)$
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="val-Kp" class="col-sm-3 col-form-label text-sm-end">$K\,[\mathrm{rad/m}]$</label>
+                <div class="col-sm-9">
+                <input type="number" step="any" class="form-control" name="val-Kp" id="val-Kp" size="5" value="0.00">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-outline-primary col-12 mt-5">Spawn</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+    <script src="emitter.js"></script>
+</body>
+
+</html>
