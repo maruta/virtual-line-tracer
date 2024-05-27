@@ -1,4 +1,6 @@
 import { Engine, Scene, FreeCamera, HemisphericLight, Vector3, Vector4, Color3, MeshBuilder, StandardMaterial, Mesh, Quaternion, PhysicsImpostor, Texture, Matrix, Axis } from "@babylonjs/core";
+import { FreeCameraKeyboardMoveInput } from '@babylonjs/core/Cameras/Inputs/freeCameraKeyboardMoveInput';
+
 import { AmmoJSPlugin } from "@babylonjs/core/Physics/Plugins/ammoJSPlugin";
 import * as GUI from "@babylonjs/gui";
 import { AssetsManager } from "@babylonjs/core";
@@ -66,6 +68,57 @@ function updateHash() {
     window.location.reload();
 }
 
+class CustomFreeCameraKeyboardMoveInput extends FreeCameraKeyboardMoveInput {
+    constructor() {
+        super();
+        // this.keysUpward = [69]; // 上昇 (Eキー)
+        // this.keysDownward = [81]; // 下降 (Qキー)
+    }
+
+    checkInputs() {
+        // 元の FreeCameraKeyboardMoveInput の checkInputs を呼び出します
+        super.checkInputs();
+
+        // キーボード入力による移動を処理します
+        let camera = this.camera;
+        let speed = camera._computeLocalCameraSpeed();
+        
+
+        // xz 平面に投影された視線方向に基づく移動を計算します
+        let forward = camera.getForwardRay().direction;
+        forward.y = 0; // y 成分を無視します
+        forward.normalize();
+        let right = Vector3.Cross(Vector3.Up(), forward).normalize();
+        
+        camera.cameraDirection = new Vector3(0, 0, 0);
+        
+        for (let keyCode of this._keys) {
+            if (camera.keysUp.indexOf(keyCode) !== -1) {
+                camera.cameraDirection.z += speed;
+            }
+            if (camera.keysDown.indexOf(keyCode) !== -1) {
+                camera.cameraDirection.z -= speed;
+            }
+            if (camera.keysLeft.indexOf(keyCode) !== -1) {
+                camera.cameraDirection.x -= speed;
+            }
+            if (camera.keysRight.indexOf(keyCode) !== -1) {
+                camera.cameraDirection.x += speed;
+            }
+            if (this.keysUpward.indexOf(keyCode) !== -1) {
+                camera.cameraDirection.y += speed;
+            }
+            if (this.keysDownward.indexOf(keyCode) !== -1) {
+                camera.cameraDirection.y -= speed;
+            }
+        }
+        
+        let movement = forward.scale(camera.cameraDirection.z).add(right.scale(camera.cameraDirection.x)).add(Vector3.Up().scale(camera.cameraDirection.y));
+        camera.cameraDirection = movement;
+    }
+}
+
+
 Ammo().then((AmmoLib) => {
     const canvas = document.getElementById("renderCanvas"); // Get the canvas element
     const engine = new Engine(canvas, true); // Generate the BABYLON 3D engine
@@ -128,6 +181,9 @@ Ammo().then((AmmoLib) => {
         camera.setTarget(camTargets[0]);
         camera.attachControl(canvas, true);
         camera.fov = 0.4;
+
+        camera.inputs.removeByType("FreeCameraKeyboardMoveInput");
+        camera.inputs.add(new CustomFreeCameraKeyboardMoveInput());        
         camera.keysUpward.push(69); //increase elevation
         camera.keysDownward.push(81); //decrease elevation
         camera.keysUp.push(87); //forwards 
@@ -135,7 +191,7 @@ Ammo().then((AmmoLib) => {
         camera.keysLeft.push(65);
         camera.keysRight.push(68);        
 
-
+        scene.activeCamera = camera;
 
         let lineTo = (x, y, z) => {
             course.push(new Vector3(x, y, z));
@@ -442,7 +498,7 @@ Ammo().then((AmmoLib) => {
             gain: k,
             dgain: k * Td,
             nametag: nametag,
-            duration: 60 * 300
+            duration: 60 * 30
         };
 
         idxSensor[sensor.uniqueId] = v;
